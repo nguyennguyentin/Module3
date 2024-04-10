@@ -1,30 +1,32 @@
-	create database quanLyBanHang_baiTap2_ss2;
+CREATE DATABASE quanLyBanHang_baiTap2_ss2;
 
-	use quanLyBanHang_baiTap2_ss2;
+use quanLyBanHang_baiTap2_ss2;
 
-	create table Customer(
-	cID varchar(20) primary key,
-	cName varchar(200),
-	cAge int
-	);
+CREATE TABLE Customer (
+    cID INT  PRIMARY KEY,
+    cName VARCHAR(255) NOT NULL,
+    cAge INT
+);
 
-	create  table Orders(
-	oID varchar(20) primary key ,
-	cID varchar(20),
-	oDate datetime,
-	oTotalPrice float
-	);
+CREATE TABLE Product (
+    pID INT  PRIMARY KEY,
+    pName VARCHAR(255) NOT NULL,
+    pPrice DECIMAL(10, 2) NOT NULL
+);
 
-	create table Product(
-	pID varchar(20) primary key,
-	pName varchar(200),
-	pPrice float
-	);
+CREATE TABLE `Order` (
+    oID INT  PRIMARY KEY,
+    cID INT,
+    oDate DATE NOT NULL,
+    oTotalPrice DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (cID) REFERENCES Customer(cID)
+);
 
-	create table OrderDetail (
-	oID varchar(20) ,
-	pID varchar(20) ,
-	odTY varchar(100),
-	primary key(oID,pID)
-	);
-
+CREATE TABLE OrderDetail (
+    oID INT,
+    pID INT,
+    odQTY INT NOT NULL,
+    PRIMARY KEY (oID, pID),
+    FOREIGN KEY (oID) REFERENCES `Order`(oID),
+    FOREIGN KEY (pID) REFERENCES Product(pID)
+);
